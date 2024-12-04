@@ -1,6 +1,7 @@
 tools/
 .DS_Store
 *.cmp
+*.out
 *.gif
 *.png
 *.xml
