@@ -15,4 +15,8 @@ CHIP DMux4Way {
 
     PARTS:
     //// Replace this comment with your code.
+    Mux4Way16(a=in, b=0, c=0, d=0, sel=sel, out=out[0]);
+    Mux4Way16(a=0, b=in, c=0, d=0, sel=sel, out=out[1]);
+    Mux4Way16(a=0, b=0, c=in, d=0, sel=sel, out=out[2]);
+    Mux4Way16(a=0, b=0, c=0, d=in, sel=sel, out=out[3]);
 }
