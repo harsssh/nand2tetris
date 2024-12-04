@@ -27,19 +27,38 @@
 // if (no == 1) sets out = !out   // bitwise not
 
 CHIP ALU {
-    IN  
-        x[16], y[16],  // 16-bit inputs        
+    IN
+        x[16], y[16],  // 16-bit inputs
         zx, // zero the x input?
         nx, // negate the x input?
         zy, // zero the y input?
         ny, // negate the y input?
         f,  // compute (out = x + y) or (out = x & y)?
         no; // negate the out output?
-    OUT 
+    OUT
         out[16], // 16-bit output
         zr,      // if (out == 0) equals 1, else 0
         ng;      // if (out < 0)  equals 1, else 0
 
     PARTS:
-    //// Replace this comment with your code.
+    // x -> x1 (zero, negate を適用)
+    Not16(in=x, out=notx);
+    Mux4Way16(a=x, b=notx, c=false, d=true, sel[0]=nx, sel[1]=zx, out=x1);
+    // y -> y1 (zero, negate を適用)
+    Not16(in=y, out=noty);
+    Mux4Way16(a=y, b=noty, c=false, d=true, sel[0]=ny, sel[1]=zy, out=y1);
+
+    // x1 & y1 = r1 (と反転)
+    And16(a=x1, b=y1, out=r1);
+    Not16(in=r1, out=notr1);
+    // x1 + y1 = r2 (と反転)
+    Add16(a=x1, b=y1, out=r2);
+    Not16(in=r2, out=notr2);
+    // out を決定 (no を適用)
+    // マイナスフラグも設定
+    Mux4Way16(a=r1, b=r2, c=notr1, d=notr2, sel[0]=f, sel[1]=no, out=out, out=o, out[15]=ng);
+
+    // ゼロフラグ
+    Or16Way(in=o, out=zero);
+    Not(in=zero, out=zr);
 }
