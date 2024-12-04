@@ -5,7 +5,7 @@
 /**
  * 16-bit Or gate:
  * for i = 0, ..., 15:
- * out[i] = a[i] Or b[i] 
+ * out[i] = a[i] Or b[i]
  */
 CHIP Or16 {
     IN a[16], b[16];
@@ -13,4 +13,6 @@ CHIP Or16 {
 
     PARTS:
     //// Replace this comment with your code.
+    Or8(a=a[0..7], b=b[0..7], out=out[0..7]);
+    Or8(a=a[8..15], b=b[8..15], out=out[8..15]);
 }
