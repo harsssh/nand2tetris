@@ -26,6 +26,14 @@
 // if (f == 0)  sets out = x & y  // bitwise and
 // if (no == 1) sets out = !out   // bitwise not
 
+/**
+ *  -x = !x + 1
+ *  x - 1 = x + 0xffff
+ *  x - y = -(!x + 1) - y
+ *        = -((!x + y) + 1)
+ *        = !(!x + y)
+ */
+
 CHIP ALU {
     IN
         x[16], y[16],  // 16-bit inputs
