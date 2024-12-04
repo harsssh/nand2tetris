@@ -1,0 +1,8 @@
+tools/
+.DS_Store
+*.cmp
+*.gif
+*.png
+*.xml
+*.txt
+*.html
