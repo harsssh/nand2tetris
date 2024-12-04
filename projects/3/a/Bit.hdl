@@ -13,5 +13,10 @@ CHIP Bit {
     OUT out;
 
     PARTS:
-    //// Replace this comment with your code.
+    // load でレジスタに保存
+    // Data Flip-flop: out(t) = in(t-1)
+    // DFF そのもの
+    // load するときは in(t-1) じゃなくて out(t-1) がほしい
+    Mux(a=prevOut, b=in, sel=load, out=nextOut);
+    DFF(in=nextOut, out=out, out=prevOut);
 }
